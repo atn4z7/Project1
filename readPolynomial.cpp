@@ -1,3 +1,4 @@
+//AN NGUYEN//
 #include "Term.h"
 #include <string> 
 #include "String_Tokenizer.h"
@@ -22,6 +23,8 @@ list<Term> readPolynomial(string& Polynomial)
 		string currentTerm = st1.next_token();
 		//split currentTerm by x^
 		String_Tokenizer st2(currentTerm, "x^");
+		if (!st2.has_more_tokens()) // if split by x^ didn't work, it might mean that the term contains x only
+			String_Tokenizer st2(currentTerm, "x"); // try to split by x
 		coefSt = st2.next_token();
 		expoSt = st2.next_token();
 		if (expoSt == "") expoSt = "0"; // if there is no exponent
