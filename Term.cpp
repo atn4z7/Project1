@@ -7,6 +7,7 @@ Term Class declarations
 #include <stdexcept>
 #include "Term.h"
 #include <iostream>
+#include <string> 
 using namespace std;
 // Default Constructor
 Term::Term()
@@ -30,7 +31,6 @@ int Term::get_exponent(void) const{
 		return exponent;
 }
 
-
 void Term::set_coefficient(int new_coefficient){
 	coefficient = new_coefficient;
 }
@@ -46,7 +46,8 @@ const Term Term::operator+(const Term& L_term){
 	else throw std::logic_error("Exponents of Terms must match.");
 }
 
-//  An's update
+//////////////////////////////////////////////
+// An's update
 bool Term::operator<(const Term& L_term)
 { return (this->exponent < L_term.exponent); } 
 
@@ -59,14 +60,22 @@ bool Term::operator==(const Term& L_term)
 // output function
 ostream& operator<<(ostream& output, const Term& aTerm)
 {
-	// I have added this check to make sure that if an exponent is of the power (1) that
-	// the term output includes the variable in the output of the term. -Jkarnes 9/22 8:33 PM
-	if (aTerm.get_exponent() == 1)
-		output << aTerm.get_coefficient() << "x";
-	else if (aTerm.get_exponent() != 0 )
-		output << aTerm.get_coefficient() << "x^" << aTerm.get_exponent();
-	else 
-		output << aTerm.get_coefficient();
+	int Coef = aTerm.get_coefficient();
+	int Expo = aTerm.get_exponent();
+
+	if (Expo == 0 ) // if the term has exponent == 0, only the coefficient is displayed
+		output << (Coef > 0 ? "+" : "") << Coef;
+	else if (Expo == 1 ) // if the term has exponent == 1, the coefficient is displayed with "x"
+		if (abs(Coef) == 1) // if the coefficient == +- 1, only the sign is displayed with "x"
+			output << (Coef > 0 ? "+" : "-") << "x" ;
+		else 
+			output << (Coef > 0 ? "+" : "") << Coef << "x" ;
+	else // display the term normally
+		if (abs(Coef) == 1) // if the coefficient == +- 1, only the sign of the coefficient is displayed 
+			output << (Coef > 0 ? "+" : "-") << "x^" << Expo;
+		else
+			output << (Coef > 0 ? "+" : "") << Coef << "x^" << Expo;
+
 	return output;
 }
 // assignment operator
