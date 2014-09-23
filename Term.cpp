@@ -15,7 +15,6 @@ Term::Term()
 //Argument Constructor
 Term::Term(int new_coefficient, int new_exponent){
 	coefficient = new_coefficient;
-	exponent_negative = (new_exponent<0);
 	exponent = new_exponent;
 }
 
@@ -28,31 +27,16 @@ int Term::get_coefficient(void) const{
 	return this->coefficient;}
 
 int Term::get_exponent(void) const{
-	if (exponent_negative)
-		return exponent*-1;
-	else
 		return exponent;
 }
 
-bool Term::is_exponent_negative(void) const{
-	return exponent_negative;
-}
 
 void Term::set_coefficient(int new_coefficient){
 	coefficient = new_coefficient;
 }
 
 void Term::set_exponent(int new_exponent){
-	if (new_exponent < 0)
-	{
-		exponent_negative = true;
-		exponent = -1 * new_exponent;
-	}
-	else exponent = new_exponent;
-}
-
-void Term::set_negative_flag(bool new_status){
-	exponent_negative = new_status;
+	exponent = new_exponent;
 }
 
 const Term Term::operator+(const Term& L_term){
@@ -61,8 +45,8 @@ const Term Term::operator+(const Term& L_term){
 	}
 	else throw std::logic_error("Exponents of Terms must match.");
 }
-//////////////////////////////////////////////
-// An's update
+
+//  An's update
 bool Term::operator<(const Term& L_term)
 { return (this->exponent < L_term.exponent); } 
 
@@ -71,10 +55,15 @@ bool Term::operator>(const Term& L_term)
 
 bool Term::operator==(const Term& L_term)
 { return (this->exponent == L_term.exponent); } 
+
 // output function
 ostream& operator<<(ostream& output, const Term& aTerm)
 {
-	if (aTerm.get_exponent() != 0 )
+	// I have added this check to make sure that if an exponent is of the power (1) that
+	// the term output includes the variable in the output of the term. -Jkarnes 9/22 8:33 PM
+	if (aTerm.get_exponent() == 1)
+		output << aTerm.get_coefficient() << "x";
+	else if (aTerm.get_exponent() != 0 )
 		output << aTerm.get_coefficient() << "x^" << aTerm.get_exponent();
 	else 
 		output << aTerm.get_coefficient();
