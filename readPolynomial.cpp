@@ -13,6 +13,8 @@ list<Term> readPolynomial(string& Polynomial)
 	string expoSt;
 	list<Term> MyPolynomial;
 	//replace - with +-
+	/* This needs to check and make sure that there IS a "-" in the polynomial or else
+	it will throw an error. -JKarnes 9/22/2014 9:20 PM */
 	size_t position = Polynomial.find("-");
 	Polynomial.replace(position, std::string("-").length(), "+-");
 	//split input by + to get separated terms
