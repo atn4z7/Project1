@@ -4,6 +4,7 @@
 	3. x^ must be followed by an exponent
 	4. x^1 can be entered as x
 	5. The polynomial is entered in descending order
+	6. x is lowercase only
 */
 #include "Term.h"
 #include <iostream>
