@@ -1,6 +1,8 @@
 //Hoang Nguyen
 #include <iostream>
-#include <vector>
+/* Why are we including the vector class? I don't see it being used anywhere.
+-Jkarnes
+#include <vector> */
 #include <list>
 #include "Term.h"
 #include "String_Tokenizer.h"
