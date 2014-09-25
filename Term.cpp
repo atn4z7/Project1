@@ -2,13 +2,9 @@
 Justin Karnes
 Term Class declarations
 */
-#pragma once
-#include <exception>
-#include <stdexcept>
+
 #include "Term.h"
-#include <iostream>
-#include <string> 
-using namespace std;
+
 // Default Constructor
 Term::Term()
 {}
@@ -39,15 +35,13 @@ void Term::set_exponent(int new_exponent){
 	exponent = new_exponent;
 }
 
-const Term Term::operator+(const Term& L_term){
+// Operator Definitions
+const Term Term::operator+(const Term& L_term) const{
 	if (this->exponent == L_term.exponent){
 		return Term((this->coefficient + L_term.coefficient), this->exponent);
 	}
 	else throw std::logic_error("Exponents of Terms must match.");
 }
-
-//////////////////////////////////////////////
-// An's update
 bool Term::operator<(const Term& L_term)
 { return (this->exponent < L_term.exponent); } 
 
@@ -56,6 +50,14 @@ bool Term::operator>(const Term& L_term)
 
 bool Term::operator==(const Term& L_term)
 { return (this->exponent == L_term.exponent); } 
+
+// assignment operator
+const Term& Term::operator=(const Term& L_term)
+{
+	this->coefficient = L_term.coefficient;
+	this->exponent = L_term.exponent;
+	return *this;
+}
 
 // output function
 ostream& operator<<(ostream& output, const Term& aTerm)
@@ -66,22 +68,18 @@ ostream& operator<<(ostream& output, const Term& aTerm)
 	if (Expo == 0 ) // if the term has exponent == 0, only the coefficient is displayed
 		output << (Coef > 0 ? "+" : "") << Coef;
 	else if (Expo == 1 ) // if the term has exponent == 1, the coefficient is displayed with "x"
+	{
 		if (abs(Coef) == 1) // if the coefficient == +- 1, only the sign is displayed with "x"
 			output << (Coef > 0 ? "+" : "-") << "x" ;
 		else 
 			output << (Coef > 0 ? "+" : "") << Coef << "x" ;
+	}
 	else // display the term normally
+	{
 		if (abs(Coef) == 1) // if the coefficient == +- 1, only the sign of the coefficient is displayed 
 			output << (Coef > 0 ? "+" : "-") << "x^" << Expo;
 		else
 			output << (Coef > 0 ? "+" : "") << Coef << "x^" << Expo;
-
+	}
 	return output;
-}
-// assignment operator
-const Term& Term::operator=(const Term& L_term)
-{
-	this->coefficient = L_term.coefficient;
-	this->exponent = L_term.exponent;
-	return *this;
 }
