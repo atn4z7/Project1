@@ -62,8 +62,8 @@ const Term& Term::operator=(const Term& L_term)
 // output function
 ostream& operator<<(ostream& output, const Term& aTerm)
 {
-	int Coef = aTerm.get_coefficient();
-	int Expo = aTerm.get_exponent();
+	int Coef = aTerm.coefficient;
+	int Expo = aTerm.exponent;
 
 	if (Expo == 0 ) // if the term has exponent == 0, only the coefficient is displayed
 		output << (Coef > 0 ? "+" : "") << Coef;
