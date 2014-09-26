@@ -162,33 +162,47 @@ const Polynomial Polynomial::operator+(const Polynomial& L_Poly) const // Adds t
 //output function
 ostream& operator<<(ostream& output,const Polynomial& poly)
 {
-	for (list<Term>::const_iterator i = poly.List_Terms.begin(); i!=poly.List_Terms.end();++i)
+	//if the polynomial is empty, output 0
+	if (poly.isEmpty())
 	{
-		if (i == poly.List_Terms.begin() ) 
-		{   // for the first term, "+" should never be displayed
-			if (i->get_coefficient() > 0) 
-			{
-				int Coef = i->get_coefficient();
-				int Expo = i->get_exponent();
+		output<<0;
+	}
+	else
+	{
+		for (list<Term>::const_iterator i = poly.List_Terms.begin(); i!=poly.List_Terms.end();++i)
+		{
+			if (i == poly.List_Terms.begin() ) 
+			{   // for the first term, "+" should never be displayed
+				if (i->get_coefficient() > 0) 
+				{
+					int Coef = i->get_coefficient();
+					int Expo = i->get_exponent();
 
-				if (Expo == 0 ) // if the term has exponent == 0, only the coefficient is displayed
-					output << Coef;
-				else if (Expo == 1 ) // if the term has exponent == 1, the coefficient is displayed with "x"
-					if (Coef == 1) // if the coefficient == 1, only "x" is displayed
-						output << "x" ;
-					else 
-						output << Coef << "x" ;
-				else // display the term normally
-					if (Coef == 1) // if the coefficient == 1, only "x^ some exponent" is displayed
-						output << "x^" << Expo;
-					else
-						output << Coef << "x^" << Expo;
+					if (Expo == 0 ) // if the term has exponent == 0, only the coefficient is displayed
+						output << Coef;
+					else if (Expo == 1 ) // if the term has exponent == 1, the coefficient is displayed with "x"
+						if (Coef == 1) // if the coefficient == 1, only "x" is displayed
+							output << "x" ;
+						else 
+							output << Coef << "x" ;
+					else // display the term normally
+						if (Coef == 1) // if the coefficient == 1, only "x^ some exponent" is displayed
+							output << "x^" << Expo;
+						else
+							output << Coef << "x^" << Expo;
+				}
+				else // display the term normally 
+					output <<  *i ;
 			}
-			else // display the term normally 
-				output <<  *i ;
+			else
+				output <<  *i  ;
 		}
-		else
-			output <<  *i  ;
 	}
 	return output;
+}
+//If the list is empty, return true
+//otherwise, return false
+bool Polynomial::isEmpty() const
+{
+	return (List_Terms.begin()==List_Terms.end());
 }
