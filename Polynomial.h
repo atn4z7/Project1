@@ -24,6 +24,7 @@ public:
 	const Polynomial operator+(const Polynomial& L_term) const; // Adds two polynomials together
 	//output function
 	friend ostream& operator<<(ostream& output,const Polynomial& poly);
+	bool isEmpty() const; //check if the list is empty
 };
 
 #endif
